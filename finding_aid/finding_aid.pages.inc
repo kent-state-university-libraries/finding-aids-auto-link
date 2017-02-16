@@ -103,7 +103,7 @@ function finding_aid_link($second_try = FALSE) {
           }
           else {
             $anchor_tag = '<a href="'
-              . $omeka_url . '/'
+              . $omeka_url . '/items/show/'
               . $omeka_item_id
               . '" target="_blank">'
               . $omeka_title
