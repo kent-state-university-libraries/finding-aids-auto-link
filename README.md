@@ -6,7 +6,7 @@ The Omeka plugin sends a request to the Drupal module whenever an *public* item 
 
 The Drupal endpoint then searches its finding aids with the metadata provided by Omeka, and attempts to link the appropriate text in the finding aid to the item in Omeka. Drupal will only link the text if it finds a unique match.
 
-![Screencast of what happens when these two systems work together](http://d.pr/i/kNMd+)
+![Screencast of what happens when these two systems work together](/images/screencast.gif)
 
 ## Installation
 
