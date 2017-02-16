@@ -1,0 +1,5 @@
+name = Finding Aids
+description = Provide an endpoint to allow other systems to update links in finding aids
+core = 7.x
+
+dependencies[] = key

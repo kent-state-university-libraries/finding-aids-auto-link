@@ -1,0 +1,52 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function finding_aid_menu() {
+  $items = array();
+
+  $items['admin/config/finding-aid'] = array(
+    'title' => 'Finding Aid Settings',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('finding_aid_admin_form'),
+    'access arguments' => array('finding aid administrator'),
+    'file' => 'finding_aid.admin.inc'
+  );
+
+  $items['ajax/omeka-finding-aids'] = array(
+    'title' => 'Omeka Finding Aid Linking',
+    'page callback' => 'finding_aid_link',
+    'access callback' => 'finding_aid_link_access',
+    'file' => 'finding_aid.pages.inc'
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function finding_aid_permission() {
+  return array(
+    'finding aid administrator' => array(
+      'title' => t('Finding Aid Administrator'),
+      'description' => t('Administer finding aid linker settings. Sets secret keys and provides IP addresses of allowed servers'),
+      'restrict access' => TRUE,
+    ),
+  );
+}
+
+function finding_aid_link_access() {
+  $allowed_servers = variable_get('finding_aid_allowed_servers', array());
+  $return = in_array($_SERVER['REMOTE_ADDR'], $allowed_servers);
+  if ($return) {
+    $key = $return = variable_get('finding_aid_secret_key', FALSE);
+    if ($key) {
+      $key = key_get_key_value($key);
+      $return = !empty($_SERVER['HTTP_FINDING_AID_SECRET_KEY']) && $key === $_SERVER['HTTP_FINDING_AID_SECRET_KEY'];
+    }
+  }
+
+  return $return;
+}
